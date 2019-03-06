@@ -1,0 +1,17 @@
+version: '2'
+services:
+
+  proxy:
+    image: quay.io/abretaud/nginx-ldap:latest
+    ports:
+        - "8700:80"
+    links:
+        - galaxy
+    volumes:
+        - "./nginx/conf:/etc/nginx/conf.d"
+
+  galaxy:
+    image: quay.io/bgruening/galaxy:19.01
+    environment:
+        PROXY_PREFIX: "/foo/bar/"
+        GALAXY_CONFIG_COOKIE_PATH: /foo/bar/
